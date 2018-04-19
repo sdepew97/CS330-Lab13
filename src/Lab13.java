@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.lang.reflect.Field;
 import java.util.*;
 
@@ -82,10 +83,20 @@ public class Lab13 {
     } // decompress()
 
     public static void main(String[] args) {
-        List<Integer> compressed = compress("It was the best of times, it was the worst of times.");
-        // String lines = new Scanner(new File())
-        System.out.println(compressed);
-        String decompressed = decompress(compressed);
-        System.out.println(decompressed);
+//        List<Integer> compressed = compress("It was the best of times, it was the worst of times.");
+//        System.out.println(compressed);
+//        String decompressed = decompress(compressed);
+//        System.out.println(decompressed);
+        try {
+//            String lines = new Scanner(new File("anassa.txt")).useDelimiter("\\Z").next();
+            String lines = new Scanner(new File("moby10b.txt")).useDelimiter("\\Z").next();
+            List<Integer> compressed = compress(lines);
+//            System.out.println(compressed);
+            String decompressed = decompress(compressed);
+//            System.out.println(decompressed);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
     } // main()
 } // class Lab13
