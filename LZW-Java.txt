@@ -1,0 +1,46 @@
+public class LZW {
+    /** Compress a string to a list of output symbols. */
+    public static List<Integer> compress(String uncompressed) {
+    } // compress()
+ 
+    /** Decompress a list of output indices from LZW compress() to a string. */
+    public static String decompress(List<Integer> indices) {
+    	System.out.println("Decompressing...");
+        // Build the dictionary.
+        int dictSize = 256;
+        Map<Integer,String> codes = new HashMap<Integer,String>();
+        for (int i = 0; i < 256; i++)
+            codes.put(i, "" + (char)i);
+ 
+        //String previous = "" + (char)(int)indices.remove(0);
+        StringBuffer result = new StringBuffer();
+        String previous = codes.get(indices.remove(0));
+        result.append(previous);
+
+        for (int current : indices) {
+            String s;
+            if (codes.containsKey(current))
+                s = codes.get(current);
+            else if (current == dictSize)
+                s = previous + previous.charAt(0);
+            else
+                throw new IllegalArgumentException("Bad compressed current: " + current);
+ 
+            result.append(s);
+ 
+            // Add w+entry[0] to the dictionary.
+            codes.put(dictSize++, previous + s.charAt(0));
+ 
+            previous = s;
+        }
+        System.out.println("Dictionary size: " + codes.size() + " entries.");
+        return result.toString();
+    } // decompress()
+ 
+    public static void main(String[] args) {
+        // List<Integer> compressed = compress("It was the best of times, it was the worst of times.");
+        // System.out.println(compressed);
+        // String decompressed = decompress(compressed);
+        // System.out.println(decompressed);
+    } // main()
+} // class LZW
